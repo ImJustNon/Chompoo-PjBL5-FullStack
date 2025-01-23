@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "mysql"
+	url      = env("DATABASE_URI")
+	shadowDatabaseUrl = env("DATABASE_SHADOW_URI")
+}
+
+model Roles {
+    role_id                     Int                         @id @default(autoincrement())
+    role_name                   String                      
+    role_description            String?                     @db.Text
+    activities                  Activities[]
+    students                    UserRoles[]
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model UserRoles {
+    user                        Users                       @relation(fields: [userrole_user_id], references: [user_id])
+    role                        Roles                       @relation(fields: [userrole_role_id], references: [role_id])
+    userrole_user_id            String                      @map("user_id")
+    userrole_role_id            Int                         @map("role_id")
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+    @@id([userrole_user_id, userrole_role_id])
+}
+
+model UserPrefix {
+    prefix_id                   Int                         @id @default(autoincrement())
+    prefix_name                 String                      @db.VarChar(10)
+    prefix_name_short           String                      @db.VarChar(8)
+    gender                      String                      @db.VarChar(10)
+    students                    Users[]
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model Users {
+	user_id						String						@id @db.VarChar(15)
+	user_prefix					UserPrefix					@relation(fields: [user_prefix_id], references: [prefix_id])
+	user_prefix_id				Int
+	user_firstname				String						@db.VarChar(50)
+	user_lastname				String						@db.VarChar(50)
+	user_email					String						@db.VarChar(50)
+	user_phonenumber			String						@db.VarChar(10)
+	user_password				String						@db.VarChar(100)
+    user_roles                  UserRoles[]         
+	is_student					Boolean
+	student						Students?
+	is_admin					Boolean
+	admin						Admins?
+	created_at					DateTime					@default(now())
+	updated_at					DateTime					@updatedAt
+}
+
+model Admins {
+	admin_id					String						@id
+	admin_department			Departments					@relation(fields: [admin_department_id], references: [department_id])
+	admin_department_id			String
+	user						Users                       @relation(fields: [admin_id], references: [user_id])
+	created_at					DateTime					@default(now())
+	updated_at					DateTime					@updatedAt
+}
+
+model Students {
+    student_id                  String                      @id   
+    student_year_admission      String                      @db.VarChar(4)
+    department                  Departments                 @relation(fields: [student_department_id], references: [department_id])      
+    student_department_id       String
+    activities_participated     ActivitiesParticipated[]          
+	user						Users                       @relation(fields: [student_id], references: [user_id])
+    qr                          QRCache?
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model Departments {
+    students                    Students[]  
+	admins						Admins[]    
+    activities                  Activities[]
+    department_id               String                      @id 
+    department_fullname_th      String
+    department_fullname_en      String           
+    department_type             String                  
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model ActivityType {
+    activities                  Activities[]
+    activitytype_id             Int                         @id
+    activitytype_name           String
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model Activities {
+    activity_id                 String                      @id @default(uuid())
+    activity_name               String                      @db.VarChar(50)
+    activity_description        String?                     @db.Text
+    activity_department         Departments                 @relation(fields: [activity_department_id], references: [department_id])
+    activity_department_id      String
+    activity_date               String                      @db.VarChar(20) //เวลา UTC
+    activity_type               ActivityType                @relation(fields: [activity_type_id], references: [activitytype_id])
+    activity_type_id            Int
+    activity_participated       ActivitiesParticipated[]
+    activity_role               Roles                       @relation(fields: [activity_role_admin_id], references: [role_id])
+    activity_role_admin_id      Int
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model ActivitiesParticipated {
+    id                          Int                         @id @default(autoincrement())
+    student                     Students                    @relation(fields: [student_id], references: [student_id])
+    student_id                  String
+    activity                    Activities                  @relation(fields: [activity_id], references: [activity_id])    
+    activity_id                 String      
+    activity_checked            Boolean                     @default(true)
+    activity_checked_late       Boolean                     @default(false)
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
+
+model QRCache {
+    student                     Students                    @relation(fields: [qrcache_student_id], references: [student_id]) 
+    qrcache_student_id          String                      @id
+    qrcache_uuid_token          String                      @db.VarChar(36)
+    qrcache_activity_id         String
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}
