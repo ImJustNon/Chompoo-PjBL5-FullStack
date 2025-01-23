@@ -1,28 +1,57 @@
 import { PrismaClient } from "@prisma/client";
+import { CookieValueTypes, getCookie } from "cookies-next";
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { validateJWTToken } from "@/utils/validateJWTToken";
+import { JWTPayload, jwtVerify } from "jose";
+import { parseJWT } from "@/utils/parseJWT";
 
 const prisma: PrismaClient = new PrismaClient();
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const prismaRes = await prisma.students.findUnique({
+    const jwtToken: string = await getCookie('token', { cookies }) as string;
+    const user_uuid: string = (await parseJWT<{uuid: string;}>(jwtToken)).uuid;
+
+    const userInfo = await prisma.users.findUnique({
         where: {
-            student_id: "65202910002",
+            user_uuid: user_uuid
         },
         include: {
-            user: {
+            student: {
                 include: {
-                    user_prefix: true,
-                    user_roles: {
+                    activities_participated: {
                         include: {
-                            role: true
+                            activity: true
                         }
                     },
-                    
-                },
+                    department: true,
+                    qr: true
+                }
             },
-            department: true
+            user_prefix: true,
+            user_roles: true,
+            admin: {
+                include: {
+                    admin_department: true
+                }
+            }
         }
     });
 
-    return NextResponse.json(prismaRes);
+    if(!userInfo){
+        return NextResponse.json({
+            status: "FAIL",
+            message: "User not found",
+        },{
+            status: 404
+        });
+    }
+
+    return NextResponse.json({
+        status: "OK",
+        message: "User Data",
+        data: userInfo
+    },{
+        status: 200
+    });
 }

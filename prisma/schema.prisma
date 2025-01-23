@@ -46,7 +46,8 @@ model UserPrefix {
 
 model Users {
 	user_id						String						@id @db.VarChar(15)
-	user_prefix					UserPrefix					@relation(fields: [user_prefix_id], references: [prefix_id])
+	user_uuid                   String                      @default(uuid()) @unique
+    user_prefix					UserPrefix					@relation(fields: [user_prefix_id], references: [prefix_id])
 	user_prefix_id				Int
 	user_firstname				String						@db.VarChar(50)
 	user_lastname				String						@db.VarChar(50)
@@ -115,6 +116,7 @@ model Activities {
     activity_participated       ActivitiesParticipated[]
     activity_role               Roles                       @relation(fields: [activity_role_admin_id], references: [role_id])
     activity_role_admin_id      Int
+    qrcache                     QRCache?
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }
@@ -132,10 +134,11 @@ model ActivitiesParticipated {
 }
 
 model QRCache {
+    qrcache_uuid                String                      @unique @default(uuid())
     student                     Students                    @relation(fields: [qrcache_student_id], references: [student_id]) 
     qrcache_student_id          String                      @id
-    qrcache_uuid_token          String                      @db.VarChar(36)
-    qrcache_activity_id         String
+    acivity                     Activities                  @relation(fields: [qrcache_activity_id],references: [activity_id])
+    qrcache_activity_id         String                      @unique
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }

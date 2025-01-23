@@ -31,7 +31,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             },
             select: {
                 user_password: true,
-                user_id: true,
+                user_uuid: true,
             }
         });
         if(!findStudent){
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         }
 
         const signUserToken: string = createJWTToken({
-            uuid: findStudent.user_id
+            uuid: findStudent.user_uuid
         }, stay_login ? "7d" : "1d");
 
         await setCookie("token", signUserToken, { 

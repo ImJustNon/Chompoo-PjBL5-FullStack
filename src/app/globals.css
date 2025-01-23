@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'DB Heavent Condensed';
+  src: url('./fonts/DBHeaventCond.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'FC Home Regular';
+  src: url('./fonts/FCHomeRegular.ttf') format('truetype');
+}
+
+* {
+    font-family: 'FC Home Regular', sans-serif;
+}
+
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,3 +35,5 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
