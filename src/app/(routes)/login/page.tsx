@@ -22,14 +22,14 @@ export default function Login(): React.JSX.Element {
                 <div className="bg-gradient-to-b from-[#f76418] to-[#c74605] p-8 py-10 rounded-t-3xl">
                     <div className="text-center text-white text-lg font-semibold mb-6">{""}</div>
                     <div> {/*Google Login Button*/}
-                        <div className="flex flex-row justify-center items-center gap-2 bg-white text-black py-3 rounded-xl hover:bg-[#e6e6e6] active:bg-[#cfcfcf] hover:text-[#f76418] duration-300 cursor-pointer hover:scale-105">
+                        <button className="w-full flex flex-row justify-center items-center gap-2 bg-white text-black py-3 rounded-xl hover:bg-[#e6e6e6] active:bg-[#cfcfcf] hover:text-[#f76418] duration-300 cursor-pointer hover:scale-105 active:scale-100">
                             <span>
                                 <Image className="h-10 w-fit" src={sbtvcAloneLogo} alt="google_signin" />
                             </span>
                             <span className="text-xl">
                                 Continue with SBTVC ID
                             </span>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
