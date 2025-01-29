@@ -99,7 +99,7 @@ model Departments {
 model ActivityType {
     activities                  Activities[]
     activitytype_id             Int                         @id
-    activitytype_name           String
+    activitytype_name           String              
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }
@@ -110,7 +110,7 @@ model Activities {
     activity_description        String?                     @db.Text
     activity_department         Departments                 @relation(fields: [activity_department_id], references: [department_id])
     activity_department_id      String
-    activity_date               String                      @db.VarChar(20) //เวลา UTC
+    activity_date               DateTime                     //เวลา UTC
     activity_type               ActivityType                @relation(fields: [activity_type_id], references: [activitytype_id])
     activity_type_id            Int
     activity_participated       ActivitiesParticipated[]
@@ -139,6 +139,7 @@ model QRCache {
     qrcache_student_id          String                      @id
     acivity                     Activities                  @relation(fields: [qrcache_activity_id],references: [activity_id])
     qrcache_activity_id         String                      @unique
+    expired_at                  DateTime 
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }

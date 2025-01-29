@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Background from "@/components/Background";
+import { ChakraProvider } from '@chakra-ui/react'
+import { Providers } from "./providers";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -23,10 +25,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 return (
 	<html lang="en">
 		<body>
-			<Background />
-			<div className="relative">
-				{children}
-			</div>
+			<Providers>
+				<Background />
+				<div className="relative">
+					{children}
+				</div>
+			</Providers>
 		</body>
 	</html>
 );

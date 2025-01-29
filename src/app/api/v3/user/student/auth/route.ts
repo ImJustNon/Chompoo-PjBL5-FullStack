@@ -13,7 +13,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const user_id: string | null = body.user_id ?? null;
     const user_password: string | null = body.user_password ?? null;
-    const stay_login: string | null = body.stay_login ?? false;
+    const stay_login: string | null = body.stay_login ?? null;
 
     if(!user_id || !user_password){
         return NextResponse.json({
