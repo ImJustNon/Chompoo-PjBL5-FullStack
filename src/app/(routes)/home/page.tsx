@@ -6,19 +6,21 @@ import { faChartLine, faChevronLeft, faRightToBracket, faUser, faUsers } from "@
 import sbtvcBanner from "../../../assets/newsbtvc.jpg";
 import Image from "next/image";
 import Header from "@/components/Header";
-import { useGetCookie } from "cookies-next";
 import { NextResponse } from "next/server";
 import { useRouter } from 'next/navigation'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { cookies } from "next/headers";
+import { useGetCookie } from "cookies-next";
 
 export default function Login(): React.JSX.Element {
-    const getCoockie = useGetCookie();
     const router = useRouter();
-    // useEffect(() =>{
-    //     if(!getCoockie("token")){
-    //         router.push("/login");
-    //     }
-    // }, []);
+    useEffect(() =>{
+        const isLogin = localStorage.getItem("is_login");
+        console.log(isLogin);
+        if(isLogin !== "true"){
+            router.push("/login");
+        }
+    }, []);
     
 
     return (

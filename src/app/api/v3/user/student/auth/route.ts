@@ -59,8 +59,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         await setCookie("token", signUserToken, { 
             cookies,
             maxAge: stay_login ? (((7 * 24) * 60) * 60) : (((1 * 24) * 60) * 60),
-            secure: false,
-            httpOnly: false,
+            secure: true,
+            httpOnly: true,
             sameSite: "none"
         });
 
