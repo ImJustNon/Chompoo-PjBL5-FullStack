@@ -1,5 +1,5 @@
 import { Button, Checkbox, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 
@@ -22,23 +22,45 @@ export default function LoginModal({ isOpen, onOpen, onClose }: { isOpen: boolea
             return;
         }
 
+        setIsLoading(true);
+
         try {
             axios.defaults.withCredentials = true;
             const authResponse: AxiosResponse = await axios.post("/api/v3/user/student/auth", {
                 user_id: userAuthData.user_id,
                 user_password: userAuthData.user_password,
                 stay_login: userAuthData.stay_login
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
             });
-
-            if(authResponse.data.status === "OK"){
-                localStorage.setItem("is_login", "true");
-                router.push("/home");
+            if(!authResponse.data.status || authResponse.data.status === "FAIL"){
+                setIsLoading(false);
+                return;
             }
+            // fetch user data
+            axios.defaults.withCredentials = true;
+            const userDataResponse: AxiosResponse = await axios.post("/api/v3/user/student/me", null, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if(!userDataResponse.data.status || userDataResponse.data.status === "FAIL"){
+                setIsLoading(false);
+                return;
+            }
+
+            localStorage.setItem("is_login", "true");
+            localStorage.setItem("user_data", JSON.stringify(userDataResponse.data.data))
+            router.push("/home");
         }
         catch(e){
             console.log(e);
+            setIsLoading(false);
         }
     }
+    
     
     return (
         <>
@@ -88,16 +110,22 @@ export default function LoginModal({ isOpen, onOpen, onClose }: { isOpen: boolea
                         />
                         <div className="mt-3 grid grid-cols-5 gap-2  items-center">
                             <div className="col-span-2 w-full flex flex-row">
-                                <Checkbox size={"md"} colorScheme="orange" defaultChecked={false} className="text-black" onChange={(event) => setUserAuthData(prev =>({
-                                    ...prev,
-                                    stay_login: event.target.checked
-                                }))}>Stay Login</Checkbox>
+                                <Checkbox 
+                                    size={"md"} 
+                                    colorScheme="orange" 
+                                    defaultChecked={false} 
+                                    className="text-black" 
+                                    onChange={(event) => setUserAuthData(prev =>({
+                                        ...prev,
+                                        stay_login: event.target.checked
+                                    }))}
+                                >Stay Login</Checkbox>
                             </div>
                             <div className="col-span-3 w-full flex flex-row place-content-end gap-2">
-                                <button className="cursor-pointer py-2 px-8 bg-[#f76418] hover:bg-[#fd8c53] active:scale-95 duration-300 text-white text-md rounded-lg" onClick={startAuth}>
+                                <button disabled={isLoading} className="cursor-pointer py-2 px-8 bg-[#f76418] hover:bg-[#fd8c53] active:scale-95 duration-300 text-white text-md rounded-lg" onClick={startAuth}>
                                     {isLoading ? (<Spinner size={"sm"} />) : "Login"}
                                 </button>
-                                <button className="cursor-pointer py-2 px-3 bg-[#d9d9d9] hover:bg-[#e9e9e9] active:scale-95 duration-300 text-black text-dm rounded-lg" onClick={onClose}>
+                                <button disabled={isLoading} className="cursor-pointer py-2 px-3 bg-[#d9d9d9] hover:bg-[#e9e9e9] active:scale-95 duration-300 text-black text-dm rounded-lg" onClick={onClose}>
                                     Cancle
                                 </button>
                             </div>

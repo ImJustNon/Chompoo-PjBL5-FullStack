@@ -4,6 +4,8 @@ import "./globals.css";
 import Background from "@/components/Background";
 import { ChakraProvider } from '@chakra-ui/react'
 import { Providers } from "./providers";
+import nextIcon from "../assets/next-js.svg";
+import img from "../assets/en.jpg"
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -17,6 +19,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+	icons: {
+		icon: "/favicon.ico", // For .ico format
+		shortcut: "/favicon.ico",
+		apple: "/favicon.png", // Optional for Apple devices
+	},
 	title: "Easy Check-in",
 	description: "Easy Check-in System for Students",
 };

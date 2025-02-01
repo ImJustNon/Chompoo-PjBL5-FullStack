@@ -7,7 +7,9 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 	const checkJWTPath: string[] = [
 		"/api/v3/user/student/me",
 		"/api/v3/user/student/qr",
-		"/api/v3/activity/checkin"
+		"/api/v3/activity/checkin",
+		"/api/v3/activity/find",
+		"/api/v3/activity/all"
 	];
 	function startsWithAny(string: string, array: string[]) {
 		return array.some(prefix => string.startsWith(prefix));
@@ -36,6 +38,8 @@ export const config = {
   	matcher: [
 		"/api/v3/user/student/me", 
 		"/api/v3/user/student/qr", 
-		"/api/v3/activity/checkin"
+		"/api/v3/activity/checkin",
+		"/api/v3/activity/find",
+		"/api/v3/activity/all"
 	],
 }
