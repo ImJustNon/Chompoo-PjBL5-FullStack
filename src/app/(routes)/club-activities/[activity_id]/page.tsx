@@ -9,13 +9,14 @@ import axios, { AxiosResponse } from "axios";
 import Countdown, { CountdownRendererFn } from 'react-countdown';
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import { useParams } from 'next/navigation';
 
-export default function ActivityInfo({ params }: { params: { activity_id: string } }) {
+export default function ActivityInfo() {
     const router = useRouter();
     const [isReqQrLoading, setIsReqQrLoading] = useState<boolean>(true);
     const [isActDetailsLoading, setIsActDetailsLoading] = useState<boolean>(true);
     const [isActRegisLoading, setIsActRegisLoading] = useState<boolean>(true);
-    const [activityId, setActivityId] = useState<string | null>(null);
+    // const [activityId, setActivityId] = useState<string | null>(null);
     const [reqNewQrState, setReqNewQrState] = useState<number>(0);
     const [qrData, setQrData] = useState<{
         expired_at: string;
@@ -44,15 +45,19 @@ export default function ActivityInfo({ params }: { params: { activity_id: string
         activity_checked: false,
         activity_checked_at: ""
     });
+
+    const params = useParams<{ activity_id: string; }>();
+    const activityId: string = params.activity_id;
     
 
     // set activity id
-    useEffect(() => {
-        (async() =>{
-            const act_id: string = (await params).activity_id;
-            setActivityId(act_id);
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async() =>{
+    //         const params = useParams<{ activity_id: string; }>();
+    //         const act_id: string = params.activity_id;
+    //         setActivityId(act_id);
+    //     })();
+    // }, []);
     
     // fetch activity qr
     useEffect(() =>{
