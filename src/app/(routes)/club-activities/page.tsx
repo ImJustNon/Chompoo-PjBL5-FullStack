@@ -19,7 +19,7 @@ export default function ClubActivities(): React.JSX.Element {
         setSelectedYear(y);
     }
 
-    const [activtiesData, setActivitiesData] = useState<[]>([]);
+    const [activtiesData, setActivitiesData] = useState<any[]>([]);
 
     useEffect(() =>{
         const getActivities = localStorage.getItem("activies_data");
@@ -55,6 +55,23 @@ export default function ClubActivities(): React.JSX.Element {
         }
     }, []);
 
+    const [adminActivitiesData, setAdminActivitiesData] = useState<any[]>([]);
+
+    useEffect(() =>{
+        if(activtiesData.length === 0) return; // wait for fetch api
+
+        const userDataJson = localStorage.getItem("user_data");
+        if(!userDataJson){
+            console.log("user_data localstorage not found please return to login page. lol");
+            return;
+        }
+        const userData = JSON.parse(userDataJson);
+        const userRoles: any[] = userData.user_roles;
+
+        const adminFilter: any[] = activtiesData.filter((act: any) => userRoles.some((userrole: any) => userrole.userrole_role_id === act.activity_role_admin_id)); // dont know but hope it works LOL
+        setAdminActivitiesData(adminFilter);
+    }, [activtiesData]);
+
     return(
         <>
             <Header />
@@ -70,7 +87,7 @@ export default function ClubActivities(): React.JSX.Element {
             </div>
 
             <div className="flex flex-col px-5 mt-10 gap-5">
-                <div className="text-left text-3xl">QRCODE ลงทะเบียน</div>
+                <div className="text-left text-3xl">รายการกิจกรรม</div>
                 {activtiesData.map((act: any, i: number) => (
                     <div key={i} className="flex flex-row items-center w-full cursor-pointer rounded-lg border-[#000000] bg-[#ffd2a8] px-4 py-4 shadow-xl group" onClick={() => router.push(`/club-activities/${act.activity_id}`)} >
                         <div className="grow flex flex-col items-start">
@@ -86,8 +103,8 @@ export default function ClubActivities(): React.JSX.Element {
 
             <div className="flex flex-col px-5 mt-10 gap-5">
                 <div className="text-left text-3xl">SCANNER ลงทะเบียน</div>
-                {activtiesData.map((act: any, i: number) => (
-                    <div key={i} className="flex flex-row items-center w-full cursor-pointer rounded-lg border-[#000000] bg-[#fef88a] px-4 py-4 shadow-xl group" onClick={() => router.push(`/club-activities/${act.activity_id}`)} >
+                {adminActivitiesData.map((act: any, i: number) => (
+                    <div key={i} className="flex flex-row items-center w-full cursor-pointer rounded-lg border-[#000000] bg-[#fef88a] px-4 py-4 shadow-xl group" onClick={() => router.push(`/club-activities/${act.activity_id}/checkin`)} >
                         <div className="grow flex flex-col items-start">
                             <div className="text-2xl">{act.activity_name}</div>
                             <div className="text-lg">โดยแผนก : {act.activity_department.department_fullname_th}</div>
