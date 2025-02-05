@@ -8,8 +8,17 @@ import sbtvcAloneLogo from "../../../assets/sbtvc.jpg";
 import { useDisclosure } from "@chakra-ui/react";
 import LoginModal from "@/components/LoginModal";
 import login_bg from "../../../assets/login_bg.png";
+import { getCookies } from "@/utils/getCookies";
+import { useRouter } from "next/navigation";
 
 export default function Login(): React.JSX.Element {
+    const router = useRouter();
+    const cookies = getCookies(document.cookie);
+    if(cookies.token) {
+        router.push("/home");
+        return(<></>);
+    }
+
     const loginModalDisclosure = useDisclosure();
     const loginModalDisclosureIsOpen: boolean = loginModalDisclosure.isOpen;
     const loginModalDisclosureOnOpen: () => void = loginModalDisclosure.onOpen;

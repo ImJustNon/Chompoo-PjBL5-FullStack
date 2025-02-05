@@ -10,9 +10,16 @@ import Countdown, { CountdownRendererFn } from 'react-countdown';
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import { useParams } from 'next/navigation';
+import { getCookies } from "@/utils/getCookies";
 
 export default function ActivityInfo() {
     const router = useRouter();
+    const cookies = getCookies(document.cookie);
+    if(!cookies.token) {
+        router.push("/login");
+        return(<></>);
+    }
+
     const [isReqQrLoading, setIsReqQrLoading] = useState<boolean>(true);
     const [isActDetailsLoading, setIsActDetailsLoading] = useState<boolean>(true);
     const [isActRegisLoading, setIsActRegisLoading] = useState<boolean>(true);

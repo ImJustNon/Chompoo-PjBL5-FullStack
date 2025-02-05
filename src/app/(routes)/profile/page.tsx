@@ -7,9 +7,17 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import dayjs from "dayjs";
+import { getCookies } from "@/utils/getCookies";
 
 export default function Profile(): React.JSX.Element {
     const router = useRouter();
+
+    // Check Login
+	const cookies = getCookies(document.cookie);
+	if(!cookies.token) {
+        router.push("/login");
+        return(<></>);
+    }
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [userData, setUserData] = useState<{

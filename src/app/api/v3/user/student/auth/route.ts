@@ -60,7 +60,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             cookies,
             maxAge: stay_login ? (((7 * 24) * 60) * 60) : (((1 * 24) * 60) * 60),
             secure: true,
-            httpOnly: true,
+            httpOnly: false,
             sameSite: "none"
         });
 

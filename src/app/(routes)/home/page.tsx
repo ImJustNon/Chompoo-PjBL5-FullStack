@@ -12,9 +12,16 @@ import { useEffect, useState } from "react";
 import { cookies } from "next/headers";
 import { useGetCookie } from "cookies-next";
 import Footer from "@/components/Footer";
+import { getCookies } from "@/utils/getCookies";
 
 export default function Login(): React.JSX.Element {
     const router = useRouter();
+    const cookies = getCookies(document.cookie);
+    if(!cookies.token) {
+        router.push("/login");
+        return(<></>);
+    }
+
     useEffect(() =>{
         const isLogin = localStorage.getItem("is_login");
         console.log(isLogin);

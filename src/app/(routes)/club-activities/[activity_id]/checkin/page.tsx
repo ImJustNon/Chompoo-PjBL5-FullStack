@@ -2,11 +2,20 @@
 
 import CheckinModal from "@/components/CheckinModal";
 import Header from "@/components/Header";
+import { getCookies } from "@/utils/getCookies";
 import { useDisclosure } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OnResultFunction, QrReader } from "react-qr-reader";
 
 export default function Checkin(): React.JSX.Element {
+    const router = useRouter();
+    const cookies = getCookies(document.cookie);
+    if(!cookies.token) {
+        router.push("/login");
+        return(<></>);
+    }
+
     const [qrResultData, setQrResultData] = useState<string>("");
 
     const scanResultModalDisclosure = useDisclosure();

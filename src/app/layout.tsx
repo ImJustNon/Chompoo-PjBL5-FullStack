@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Providers } from "./providers";
 import nextIcon from "../assets/next-js.svg";
 import img from "../assets/en.jpg"
+import { useEffect } from "react";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -29,16 +30,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
-return (
-	<html lang="en">
-		<body>
-			<Providers>
-				<Background />
-				<div className="relative">
-					{children}
-				</div>
-			</Providers>
-		</body>
-	</html>
-);
+	return (
+		<html lang="en">
+			<body>
+				<Providers>
+					<Background />
+					<div className="relative">
+						{children}
+					</div>
+				</Providers>
+			</body>
+		</html>
+	);
 }

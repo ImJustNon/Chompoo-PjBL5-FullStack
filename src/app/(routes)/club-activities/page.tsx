@@ -1,6 +1,7 @@
 "use client"
 
 import Header from "@/components/Header";
+import { getCookies } from "@/utils/getCookies";
 import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios, { AxiosResponse } from "axios";
@@ -9,6 +10,11 @@ import { useEffect, useState } from "react";
 
 export default function ClubActivities(): React.JSX.Element {
     const router = useRouter();
+    const cookies = getCookies(document.cookie);
+    if(!cookies.token) {
+        router.push("/login");
+        return(<></>);
+    }
     
     const [isOpenYearDropDown, setIsOpenYearDropDown] = useState<boolean>(false);
     const [selectedYear, setSelectedYear] = useState<string>("?");
