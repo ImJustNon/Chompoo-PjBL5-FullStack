@@ -1,8 +1,10 @@
-import React from "react";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { LayoutDashboard, Users, Settings, LogOut } from "lucide-react";
 
 export default function AdminLayout({ children }: {children: React.ReactNode}): React.JSX.Element {
+
     return(
         <div className={`min-h-screen bg-gray-100 `}>
             {/* Header */}

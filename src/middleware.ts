@@ -9,7 +9,11 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 		"/api/v3/user/student/qr",
 		"/api/v3/activity/checkin",
 		"/api/v3/activity/find",
-		"/api/v3/activity/all"
+		"/api/v3/activity/all",
+		"/api/v3/admin/user/students/add",
+		"/api/v3/admin/user/admins/add",
+		"/api/v3/admin/user/admins",
+		"/api/v3/admin/user/students",
 	];
 	function startsWithAny(string: string, array: string[]) {
 		return array.some(prefix => string.startsWith(prefix));
@@ -40,6 +44,10 @@ export const config = {
 		"/api/v3/user/student/qr", 
 		"/api/v3/activity/checkin",
 		"/api/v3/activity/find",
-		"/api/v3/activity/all"
+		"/api/v3/activity/all",
+		"/api/v3/admin/user/students/add",
+		"/api/v3/admin/user/admins/add",
+		"/api/v3/admin/user/admins",
+		"/api/v3/admin/user/students",
 	],
 }
