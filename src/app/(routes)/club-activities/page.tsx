@@ -10,11 +10,14 @@ import { useEffect, useState } from "react";
 
 export default function ClubActivities(): React.JSX.Element {
     const router = useRouter();
-    const cookies = getCookies(document.cookie);
-    if(!cookies.token) {
-        router.push("/login");
-        return(<></>);
-    }
+
+    useEffect(() =>{
+        const cookies = getCookies(document.cookie);
+        if(!cookies.token) {
+            return router.push("/login");
+        }
+    }, []);
+    
     
     const [isOpenYearDropDown, setIsOpenYearDropDown] = useState<boolean>(false);
     const [selectedYear, setSelectedYear] = useState<string>("?");

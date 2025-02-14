@@ -12,12 +12,14 @@ import { getCookies } from "@/utils/getCookies";
 export default function Profile(): React.JSX.Element {
     const router = useRouter();
 
-    // Check Login
-	const cookies = getCookies(document.cookie);
-	if(!cookies.token) {
-        router.push("/login");
-        return(<></>);
-    }
+    useEffect(() =>{
+        // Check Login
+        const cookies = getCookies(document.cookie);
+        if(!cookies.token) {
+            return router.push("/login");
+        }
+    }, []);
+    
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [userData, setUserData] = useState<{

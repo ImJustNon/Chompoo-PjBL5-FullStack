@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import sbtvc_logo from "../../../assets/sbtvcwithname.jpg";
 import googleIconSVG from "../../../assets/google-icon.svg";
 import sbtvcAloneLogo from "../../../assets/sbtvc.jpg";
@@ -13,11 +13,14 @@ import { useRouter } from "next/navigation";
 
 export default function Login(): React.JSX.Element {
     const router = useRouter();
-    const cookies = getCookies(document.cookie);
-    if(cookies.token) {
-        router.push("/home");
-        return(<></>);
-    }
+
+    useEffect(() =>{
+        const cookies = getCookies(document.cookie);
+        if(cookies.token) {
+            return router.push("/home");
+        }
+    }, []);
+ 
 
     const loginModalDisclosure = useDisclosure();
     const loginModalDisclosureIsOpen: boolean = loginModalDisclosure.isOpen;

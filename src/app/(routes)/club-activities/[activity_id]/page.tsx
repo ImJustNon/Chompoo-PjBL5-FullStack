@@ -14,11 +14,14 @@ import { getCookies } from "@/utils/getCookies";
 
 export default function ActivityInfo() {
     const router = useRouter();
-    const cookies = getCookies(document.cookie);
-    if(!cookies.token) {
-        router.push("/login");
-        return(<></>);
-    }
+
+    useEffect(() =>{
+        const cookies = getCookies(document.cookie);
+        if(!cookies.token) {
+            return router.push("/login");
+        }
+    }, []);
+    
 
     const [isReqQrLoading, setIsReqQrLoading] = useState<boolean>(true);
     const [isActDetailsLoading, setIsActDetailsLoading] = useState<boolean>(true);
