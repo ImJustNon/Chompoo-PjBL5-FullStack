@@ -10,6 +10,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const jwtToken: string = await getCookie('token', { cookies }) as string;
     const user_uuid: string = (await parseJWT<{uuid: string;}>(jwtToken)).uuid;
 
+    const reqBody = await req.json();
+    // const user_id: string | null = reqBody.user_id ?? null;
+
     try {
         // find user
         const findUser = await prisma.users.findUnique({
@@ -43,28 +46,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             }); 
         }
 
-        const studentResults = await prisma.users.findMany({
-            where: {
-                NOT: {
-                    student: null
-                }
-            },
-            select: { 
-                student: true,
-                user_email: true,
-                user_firstname: true,
-                user_lastname: true,
-                user_phonenumber: true,
-                user_prefix: true,
-                user_roles: true,
-                user_id: true
-            }
-        });
-
+        console.log(reqBody);
         return NextResponse.json({
             status: "OK",
             message: "OK",
-            data: studentResults
+            data: null
         }, {
             status: 200
         });
