@@ -19,11 +19,6 @@ export default function Login(): React.JSX.Element {
     
 
     useEffect(() =>{
-        // const isLogin = localStorage.getItem("is_login");
-        // console.log(isLogin);
-        // if(isLogin !== "true"){
-        //     router.push("/login");
-        // }
         const cookies = getCookies(document.cookie);
         if(!cookies.token) {
             return router.push("/login");
