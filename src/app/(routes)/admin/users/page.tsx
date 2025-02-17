@@ -1,7 +1,7 @@
 "use client"
 
 import StudentOptionsDrawer from "@/components/Admin/StudentOptionsDrawer";
-import { useDisclosure } from "@chakra-ui/react";
+import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { List } from "lucide-react"
 import { useEffect, useState } from "react";
@@ -28,8 +28,16 @@ export default function Users(): React.JSX.Element {
 
 	const [students, setStudents] = useState<[]>([]);
 	const [admins, setAdmins] = useState<[]>([]);
+	const [isUsersDataLoading, setIsUserDataLoading] = useState<{
+		students: boolean;
+		admins: boolean;
+	}>({
+		students: true,
+		admins: true
+	});
 
 	useEffect(() =>{
+		setIsUserDataLoading(prev => ({admins: true, students: true}));
 		(async() =>{
 			try {
 				axios.defaults.withCredentials = true;
@@ -42,6 +50,7 @@ export default function Users(): React.JSX.Element {
 					return console.log(getStudentDataResponse.data.message);
 				}
 				setStudents(getStudentDataResponse.data.data);
+				setIsUserDataLoading(prev => ({...prev, students: false}));
 			}
 			catch(e){
 				console.log(e);
@@ -59,6 +68,7 @@ export default function Users(): React.JSX.Element {
 					return console.log(getStudentDataResponse.data.message);
 				}
 				setAdmins(getStudentDataResponse.data.data);
+				setIsUserDataLoading(prev => ({...prev, admins: false}));
 			}
 			catch(e){
 				console.log(e);
@@ -93,6 +103,12 @@ export default function Users(): React.JSX.Element {
 										</td>
 									</tr>
 								))}
+								{/* Loading */}
+								<tr hidden={!isUsersDataLoading.students}>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -122,6 +138,12 @@ export default function Users(): React.JSX.Element {
 										</td>
 									</tr>
 								))}
+								{/* Loading */}
+								<tr hidden={!isUsersDataLoading.admins}>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

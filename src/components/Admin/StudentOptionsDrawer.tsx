@@ -206,6 +206,7 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id }: { 
                                 <div className="grid grid-cols-3 item-center gap-5">
                                     <div className="text-xl">ID</div>
                                     <input 
+                                        disabled={true}
                                         value={studentData.user_id} 
                                         className="col-span-2 px-2 py-1 w-full h-10px border-2 border-[#d8d8d8] outline-none rounded-md hover:border-[#727272] focus:border-[#000000] duration-300" type="text" 
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setStudentData(prev =>({

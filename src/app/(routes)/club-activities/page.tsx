@@ -78,8 +78,11 @@ export default function ClubActivities(): React.JSX.Element {
         const userRoles: any[] = userData.user_roles;
 
         const adminFilter: any[] = activtiesData.filter((act: any) => userRoles.some((userrole: any) => userrole.userrole_role_id === act.activity_role_admin_id)); // dont know but hope it works LOL
+        // const adminFilter: any[] = activtiesData.filter((act: any) => userRoles.some((userrole: any) => userrole.userrole_role_id === act.activity_role_admin_id));
         setAdminActivitiesData(adminFilter);
     }, [activtiesData]);
+
+    
 
     return(
         <>
@@ -110,8 +113,8 @@ export default function ClubActivities(): React.JSX.Element {
                 ))}
             </div>
 
-            <div className="flex flex-col px-5 mt-10 gap-5">
-                <div className="text-left text-3xl">SCANNER ลงทะเบียน</div>
+            <div className="flex flex-col px-5 mt-10 gap-5" hidden={adminActivitiesData.length === 0} >
+                <div className="text-left text-3xl">เเสกนลงทะเบียน</div>
                 {adminActivitiesData.map((act: any, i: number) => (
                     <div key={i} className="flex flex-row items-center w-full cursor-pointer rounded-lg border-[#000000] bg-[#fef88a] px-4 py-4 shadow-xl group" onClick={() => router.push(`/club-activities/${act.activity_id}/checkin`)} >
                         <div className="grow flex flex-col items-start">

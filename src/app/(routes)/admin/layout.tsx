@@ -19,9 +19,9 @@ export default function AdminLayout({ children }: {children: React.ReactNode}): 
             <div className="fixed top-0 left-0 right-0 bg-white shadow z-10">
                 <div className="max-w-full mx-auto py-4 px-4 flex justify-between items-center">
                     <h1 className="text-2xl font-semibold text-gray-900">SBTVC | <span className="hidden md:inline">Easy Checkin</span><span className="inline md:hidden">EZ</span> Admin <span className="hidden md:inline">Dashboard</span></h1>
-                    <button className="md:flex hidden items-center text-gray-600 hover:text-black text-xl duration-300">
+                    <Link href={"/admin/logout"} className="md:flex hidden items-center text-gray-600 hover:text-black text-xl duration-300">
                         <LogOut className="mr-2 h-4 w-4" /> Logout
-                    </button>
+                    </Link>
                     <button className="md:hidden flex items-center text-gray-600 hover:text-black text-xl duration-300" onClick={() => navigationDrawerOnOpen()}>
                         <Menu className="mr-2 h-4 w-4" /> Menu
                     </button>
