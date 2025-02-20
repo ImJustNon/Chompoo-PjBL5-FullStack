@@ -30,8 +30,8 @@ export default function AdminLayout({ children }: {children: React.ReactNode}): 
             <div className="flex pt-16">
                 {/* Left Navigation */}
                 <div className="hidden md:flex fixed left-0 top-16 w-64 bg-white shadow min-h-screen overflow-y-auto">
-                    <div className="mt-5 px-2">
-                        <Link href="/admin" className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >
+                    <div className="mt-5 px-2 w-full">
+                        <Link href="/admin" className="group w-full flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >
                             <LayoutDashboard className="mr-3 h-6 w-6" />Dashboard
                         </Link>
                         <Link href="/admin/users" className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >

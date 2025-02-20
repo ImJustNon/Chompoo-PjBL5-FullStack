@@ -12,19 +12,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const reqBody = await req.json();
     const user_id: string | null = reqBody.user_id ?? null;
-    const user_prefix_id: number | null = reqBody.user_prefix_id ?? null;
+    const user_prefix: {user_prefix_id: number; user_prefix_name: string;} | null = reqBody.user_prefix ?? null;
     const user_firstname: string | null = reqBody.user_firstname ?? null;
     const user_lastname: string | null = reqBody.user_lastname ?? null;
     const user_email: string | null = reqBody.user_email ?? null;
     const user_phonenumber: string | null = reqBody.user_phonenumber ?? null;
     const user_password: string | null = reqBody.user_password ?? null;
-    const student_department_id: string | null = reqBody.student_department_id ?? null;
-    const student_year_admission: string | null = reqBody.student_year_admission ?? null;
+    const user_roles: {user_role_id: number; user_role_name: string;}[] | null = reqBody.user_roles ?? null;
+    const student_admission_year: string | null = reqBody.student_admission_year ?? null;
+    const student_department: {student_department_id: string; student_department_name: string;} | null = reqBody.student_department ?? null;
 
-    if(!user_id || !user_prefix_id || !user_firstname || !user_lastname || !user_email || !user_phonenumber || !user_password || !student_department_id || !student_year_admission){
+    if(!user_id || !user_prefix || !user_firstname || !user_lastname || !user_email || !user_phonenumber || !student_admission_year || !student_department || !user_password){
         return NextResponse.json({
             status: "FAIL",
-            message: "Information missing"
+            message: "Data missing"
         }, {
             status: 400
         });
@@ -65,10 +66,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             });
         }
         
+        // create user
         const createUser = await prisma.users.create({
             data: {
                 user_id: user_id,
-                user_prefix_id: user_prefix_id,
+                user_prefix_id: user_prefix.user_prefix_id,
                 user_firstname: user_firstname,
                 user_lastname: user_lastname,
                 user_email: user_email,
@@ -78,13 +80,23 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 is_student: true
             }
         });
-        const createStudent = await prisma.students.create({
+        // create student
+        await prisma.students.create({
             data: {
                 student_id: createUser.user_id,
-                student_year_admission: student_year_admission,
-                student_department_id: student_department_id
+                student_year_admission: student_admission_year,
+                student_department_id: student_department.student_department_id
             },
         }); 
+        // create user roles if exit
+        if(user_roles){
+            await prisma.userRoles.createMany({
+                data: user_roles.map((u_r: {user_role_id: number}) => ({
+                    userrole_user_id: createUser.user_id,
+                    userrole_role_id: u_r.user_role_id
+                })),
+            });
+        }
 
         return NextResponse.json({
             status: "OK",

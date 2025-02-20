@@ -2,9 +2,8 @@ import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, Dra
 import axios, { AxiosResponse } from "axios";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refetch }: { isOpen: boolean; onOpen: () => void; onClose: () => void; id: string; refetch: Dispatch<SetStateAction<number>> }): React.JSX.Element {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
+export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, refetch }: { isOpen: boolean; onOpen: () => void; onClose: () => void; refetch: Dispatch<SetStateAction<number>>}): React.JSX.Element {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     interface UserPrefix {
         user_prefix_id: number;
@@ -47,51 +46,6 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
             student_department_name: ""
         }
     });
-
-    useEffect(() =>{
-        setIsLoading(true);
-        (async() =>{
-            try {
-                axios.defaults.withCredentials = true;
-                const studentDataResponse: AxiosResponse = await axios.post("/api/v3/admin/user/students/find", {
-                    user_id: id
-                }, {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
-                if(studentDataResponse.data.status === "FAIL"){
-                    return console.log(studentDataResponse.data.message);
-                }
-
-                setStudentData({
-                    user_id: studentDataResponse.data.data.user_id,
-                    user_prefix: {
-                        user_prefix_id: studentDataResponse.data.data.user_prefix.prefix_id,
-                        user_prefix_name: studentDataResponse.data.data.user_prefix.prefix_name
-                    },
-                    user_firstname: studentDataResponse.data.data.user_firstname,
-                    user_lastname: studentDataResponse.data.data.user_lastname,
-                    user_email: studentDataResponse.data.data.user_email,
-                    user_phonenumber: studentDataResponse.data.data.user_phonenumber,
-                    user_password: "",
-                    user_roles: studentDataResponse.data.data.user_roles.map((r: any): UserRoles => ({
-                        user_role_id: r.role.role_id,
-                        user_role_name: r.role.role_name
-                    })),
-                    student_admission_year: studentDataResponse.data.data.student.student_year_admission,
-                    student_department: {
-                        student_department_id: studentDataResponse.data.data.student.department.department_id,
-                        student_department_name: studentDataResponse.data.data.student.department.department_fullname_th
-                    }
-                });
-                setIsLoading(false);
-            }
-            catch(e){
-                console.log(e);
-            }
-        })();
-    }, [id, isOpen]);
 
     interface UserPrefixOptions {
         userprefix_id: number;
@@ -169,7 +123,7 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
         setIsLoading(true);
         try {
             axios.defaults.withCredentials = true;
-            const updateResponse: AxiosResponse = await axios.post("/api/v3/admin/user/students/update", studentData, {
+            const updateResponse: AxiosResponse = await axios.post("/api/v3/admin/user/students/add", studentData, {
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -181,7 +135,6 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
 
             setIsLoading(false);
             onClose();
-            refetch((prev: number) => prev + 1);
         }
         catch(e){
             console.log(e);
@@ -200,14 +153,14 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
                 <DrawerOverlay />
                 <DrawerContent>
                 <DrawerCloseButton />
+                    <div className="text-center text-3xl mt-5">Add Student</div>
                     { !isLoading ? (
                         <DrawerBody>
-                            <div className="text-2xl mt-8 mb-5">General Informations</div>
+                            <div className="text-2xl mt-5 mb-5">General Informations</div>
                             <div className="flex flex-col gap-5">
                                 <div className="grid grid-cols-3 item-center gap-5">
                                     <div className="text-xl">ID</div>
                                     <input 
-                                        disabled={true}
                                         value={studentData.user_id} 
                                         className="col-span-2 px-2 py-1 w-full h-10px border-2 border-[#d8d8d8] outline-none rounded-md hover:border-[#727272] focus:border-[#000000] duration-300" type="text" 
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setStudentData(prev =>({
@@ -224,7 +177,7 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
                                             className="px-2 py-1 w-full h-10px border-2 border-[#d8d8d8] outline-none rounded-md hover:border-[#727272] focus:border-[#000000] duration-300" type="text" 
                                             onClick={() =>{
                                                 setIsOpenPrefixOptionsMenu(prev => !prev);
-                                                getPrefix()
+                                                getPrefix();
                                             }}
                                         />
                                         <div hidden={!isOpenPrefixOptionsMenu} className="absolute bg-[#dcdcdc] w-full rounded-md left-0 top-10 text-black">
@@ -407,10 +360,8 @@ export default function StudentOptionsDrawer({ isOpen, onOpen, onClose, id, refe
                         </div>
                     )}
                     <DrawerFooter>
-                        <div hidden={isLoading} className="flex flex-row gap-5 mb-5 w-full">
+                        <div hidden={isLoading} className="flex flex-row justify-between gap-5 mb-5 w-full">
                             <button className="text-xl text-[#282828] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300" onClick={() => save()}>Save</button>
-                            <div className="grow"></div>
-                            <button className="text-xl text-[#f00] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300">Delete</button>
                             <button className="text-xl text-[#282828] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300" onClick={() => onClose()}>Cancle</button>
                         </div>
                     </DrawerFooter>

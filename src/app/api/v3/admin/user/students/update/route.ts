@@ -23,7 +23,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const student_admission_year: string | null = reqBody.student_admission_year ?? null;
     const student_department: {student_department_id: string; student_department_name: string;} | null = reqBody.student_department ?? null;
 
-    console.log(reqBody);
 
     if(!user_id || !user_prefix || !user_firstname || !user_lastname || !user_email || !user_phonenumber || !student_admission_year || !student_department){
         return NextResponse.json({

@@ -16,6 +16,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const findUser = await prisma.users.findUnique({
             where: {
                 user_uuid: user_uuid
+            },
+            select: {
+                user_id: true
             }
         });
         if(!findUser){
@@ -27,12 +30,28 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             });
         }
 
+        // check admin
+        const findAdmin = await prisma.admins.findUnique({
+            where: {
+                admin_id: findUser.user_id
+            }
+        });
+        if(!findAdmin){
+            return NextResponse.json({
+                status: "FAIL",
+                message: "U R Not Admin"
+            }, {
+                status: 403
+            });
+        }
+
         // search activity
         const findActivity = await prisma.activities.findMany({
             include: {
                 activity_department: true,
                 activity_type: true,
                 activity_role: true,
+                activity_participated: true,
             },
             where: {
                 activity_type_id: 1

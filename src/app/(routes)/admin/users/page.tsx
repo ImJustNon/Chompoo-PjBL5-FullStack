@@ -1,5 +1,6 @@
 "use client"
 
+import AddStudentDrawer from "@/components/Admin/AddStudentDrawer";
 import StudentOptionsDrawer from "@/components/Admin/StudentOptionsDrawer";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
@@ -14,6 +15,8 @@ const users = [
 
 export default function Users(): React.JSX.Element {
 
+	const [refetchData, setRefetchData] = useState<number>(0);
+
 	const [editUserId, setEditUserId] = useState<string>("");
 
 	const studentOptionsDrawerDisclosure = useDisclosure();
@@ -25,6 +28,11 @@ export default function Users(): React.JSX.Element {
 	const adminOptionsDrawerIsOpen = adminOptionsDrawerDisclosure.isOpen;
 	const adminOptionsDrawerOnOpen = adminOptionsDrawerDisclosure.onOpen;
 	const adminOptionsDrawerOnClose = adminOptionsDrawerDisclosure.onClose;
+
+	const addStudentDrawerDisclosure = useDisclosure();
+	const addStudentDrawerIsOpen = addStudentDrawerDisclosure.isOpen;
+	const addStudentDrawerOnOpen = addStudentDrawerDisclosure.onOpen;
+	const addStudentDrawerOnClose = addStudentDrawerDisclosure.onClose;
 
 	const [students, setStudents] = useState<[]>([]);
 	const [admins, setAdmins] = useState<[]>([]);
@@ -74,13 +82,16 @@ export default function Users(): React.JSX.Element {
 				console.log(e);
 			}
 		})();
-	}, []);
+	}, [refetchData]);
 
 	return (
 		<>
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 				<div className="w-full">
-					<h2 className="text-2xl font-semibold">Students</h2>
+					<div className="flex flex-row justify-between mb-2 items-center mx-5">
+						<h2 className="text-2xl font-semibold">Students</h2>
+						<button className="text-xl px-5 py-1 border-[1px] rounded-md hover:bg-[#d6d6d6] active:bg-[#ededed] duration-300" onClick={() => addStudentDrawerOnOpen()}>Add</button>
+					</div>
 					<div className="bg-white shadow rounded-lg overflow-y-visible">
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
@@ -92,14 +103,16 @@ export default function Users(): React.JSX.Element {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{students.map((student: any, i: number) => (
-									<tr key={i} className="hover:bg-[#ebebeb] duration-300">
+									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.students}>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.user_id}</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.user_prefix.prefix_name} {student.user_firstname} {student.user_lastname}</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
 											<button onClick={() =>{
 												studentOptionsDrawerOnOpen();
 												setEditUserId(student.user_id);
-											}}><List className="text-xl" /></button>
+											}}>
+												<List className="text-xl" />
+											</button>
 										</td>
 									</tr>
 								))}
@@ -115,7 +128,10 @@ export default function Users(): React.JSX.Element {
 				</div>
 
 				<div className="w-full">
-					<h2 className="text-2xl font-semibold">Admins</h2>
+				<div className="flex flex-row justify-between mb-2 items-center mx-5">
+						<h2 className="text-2xl font-semibold">Admins</h2>
+						<button className="text-xl px-5 py-1 border-[1px] rounded-md hover:bg-[#d6d6d6] active:bg-[#ededed] duration-300">Add</button>
+					</div>
 					<div className="bg-white shadow rounded-lg overflow-y-visible">
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
@@ -127,7 +143,7 @@ export default function Users(): React.JSX.Element {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{admins.map((admin: any, i: number) => (
-									<tr key={i} className="hover:bg-[#ebebeb] duration-300">
+									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.admins}>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{admin.user_id}</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{admin.user_prefix.prefix_name} {admin.user_firstname} {admin.user_lastname}</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
@@ -149,7 +165,8 @@ export default function Users(): React.JSX.Element {
 					</div>
 				</div>
 			</div>
-			<StudentOptionsDrawer isOpen={studentOptionsDrawerIsOpen} onOpen={studentOptionsDrawerOnOpen} onClose={studentOptionsDrawerOnClose} id={editUserId} />
+			<StudentOptionsDrawer isOpen={studentOptionsDrawerIsOpen} onOpen={studentOptionsDrawerOnOpen} onClose={studentOptionsDrawerOnClose} id={editUserId} refetch={setRefetchData} />
+			<AddStudentDrawer isOpen={addStudentDrawerIsOpen} onOpen={addStudentDrawerOnOpen} onClose={addStudentDrawerOnClose} refetch={setRefetchData} />
 		</>
 	)
 }
