@@ -14,7 +14,9 @@ export function AdminNavigationDrawer({ isOpen, onOpen, onClose }: { isOpen: boo
                 placement={"right"}
                 onClose={onClose}
                 finalFocusRef={btnRef}
-                size={"xs"}
+                size={{
+                    "sm": "xs"
+                }}
                 isFullHeight={true}
             >
                 <DrawerContent bgColor={"rgba(255, 255, 255, 0.1)"} backdropFilter={"blur(6px)"}>

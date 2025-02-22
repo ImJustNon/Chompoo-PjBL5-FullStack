@@ -96,17 +96,17 @@ export default function Users(): React.JSX.Element {
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
 								<tr>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
 								</tr>
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{students.map((student: any, i: number) => (
 									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.students}>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.user_id}</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.user_prefix.prefix_name} {student.user_firstname} {student.user_lastname}</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{student.user_id}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{student.user_prefix.prefix_name} {student.user_firstname} {student.user_lastname}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
 											<button onClick={() =>{
 												studentOptionsDrawerOnOpen();
 												setEditUserId(student.user_id);
@@ -118,9 +118,9 @@ export default function Users(): React.JSX.Element {
 								))}
 								{/* Loading */}
 								<tr hidden={!isUsersDataLoading.students}>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
 								</tr>
 							</tbody>
 						</table>
@@ -136,17 +136,17 @@ export default function Users(): React.JSX.Element {
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
 								<tr>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
 								</tr>
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{admins.map((admin: any, i: number) => (
 									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.admins}>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{admin.user_id}</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{admin.user_prefix.prefix_name} {admin.user_firstname} {admin.user_lastname}</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{admin.user_id}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{admin.user_prefix.prefix_name} {admin.user_firstname} {admin.user_lastname}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
 											<button onClick={() =>{
 												adminOptionsDrawerOnOpen();
 												setEditUserId(admin.user_id);
@@ -156,9 +156,9 @@ export default function Users(): React.JSX.Element {
 								))}
 								{/* Loading */}
 								<tr hidden={!isUsersDataLoading.admins}>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
-									<td className="px-6 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
+									<td className="px-3 py-4"><Spinner thickness='2px' speed='0.45s' emptyColor='gray.200' color='black.500' size='md' /></td>
 								</tr>
 							</tbody>
 						</table>

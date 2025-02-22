@@ -3,10 +3,11 @@ import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export default function AddActivityDrawer({ isOpen, onOpen, onClose, refetch }: { isOpen: boolean; onOpen: () => void; onClose: () => void; refetch: Dispatch<SetStateAction<number>>; }): React.JSX.Element {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+export default function EditActivityDrawer({ isOpen, onOpen, onClose, id, refetch }: { isOpen: boolean; onOpen: () => void; onClose: () => void; id: string; refetch: Dispatch<SetStateAction<number>>; }): React.JSX.Element {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     interface ActivityData {
+        activity_id: string;
         activity_name: string;
         activity_description: string;
         activity_department: {
@@ -24,6 +25,7 @@ export default function AddActivityDrawer({ isOpen, onOpen, onClose, refetch }: 
         };
     }
     const activityDataInitState = {
+        activity_id: "",
         activity_name: "",
         activity_description: "",
         activity_department: {
@@ -41,9 +43,48 @@ export default function AddActivityDrawer({ isOpen, onOpen, onClose, refetch }: 
         }
     }
     const [activityData, setActivityData] = useState<ActivityData>(activityDataInitState);
-    
-    // Set initial State when open drawer
-    useEffect(() => setActivityData(activityDataInitState), [isOpen]);
+
+    useEffect(() =>{
+        setIsLoading(true);
+        (async() =>{
+            try {
+                axios.defaults.withCredentials = true;
+                const activityDataResponse: AxiosResponse = await axios.post("/api/v3/admin/activity/find", {
+                    activity_id: id
+                }, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                if(activityDataResponse.data.status === "FAIL"){
+                    return console.log(activityDataResponse.data.message);
+                }
+
+                setActivityData({
+                    activity_id: id,
+                    activity_name: activityDataResponse.data.data.activity_name,
+                    activity_description: activityDataResponse.data.data.activity_description,
+                    activity_department: {
+                        id: activityDataResponse.data.data.activity_department.department_id,
+                        name: activityDataResponse.data.data.activity_department.department_fullname_th 
+                    },
+                    activity_date: activityDataResponse.data.data.activity_date,
+                    activity_type: {
+                        id: activityDataResponse.data.data.activity_type.activitytype_id,
+                        name: activityDataResponse.data.data.activity_type.activitytype_name
+                    },
+                    activity_role: {
+                        id: activityDataResponse.data.data.activity_role.role_id,
+                        name: activityDataResponse.data.data.activity_role.role_name
+                    }
+                });
+                setIsLoading(false);
+            }
+            catch(e){
+                console.log(e);
+            }
+        })();
+    }, [id, isOpen]);
 
     // req Departments data
     interface UserDepartmentOptions {
@@ -99,7 +140,7 @@ export default function AddActivityDrawer({ isOpen, onOpen, onClose, refetch }: 
         setIsLoading(true);
         try {
             axios.defaults.withCredentials = true;
-            const addResponse: AxiosResponse = await axios.post("/api/v3/admin/activity/add", activityData, {
+            const addResponse: AxiosResponse = await axios.post("/api/v3/admin/activity/update", activityData, {
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -252,8 +293,9 @@ export default function AddActivityDrawer({ isOpen, onOpen, onClose, refetch }: 
                     )}
                     <DrawerFooter>
                         <div hidden={isLoading} className="flex flex-row gap-5 mb-5 w-full">
-                            <button className="text-xl text-[#282828] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300" onClick={() => save()}>Save</button>
+                            <button className="text-xl text-[#282828] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300" onClick={() => save()}>Update</button>
                             <div className="grow"></div>
+                            <button className="text-xl text-[#f00] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300">Delete</button>
                             <button className="text-xl text-[#282828] bg-[#fff] px-5 py-1 hover:bg-[#e6e6e6] rounded-md active:bg-[#cfcfcf] duration-300" onClick={() => onClose()}>Cancle</button>
                         </div>
                     </DrawerFooter>

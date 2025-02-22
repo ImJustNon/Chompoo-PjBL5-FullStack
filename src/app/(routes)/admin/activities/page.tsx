@@ -1,6 +1,8 @@
 "use client"
 
 import AddActivityDrawer from "@/components/Admin/Activity/AddActivityDrawer";
+import EditActivityDrawer from "@/components/Admin/Activity/EditActivityDrawer";
+import ListParticipatedActivityModal from "@/components/Admin/Activity/ListParticipatedActivityDrawer";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
@@ -49,6 +51,16 @@ export default function Activities(): React.JSX.Element {
     const addNewActivityDrawerOnOpen = addNewActivityDrawerDisclosure.onOpen;
     const addNewActivityDrawerOnClose = addNewActivityDrawerDisclosure.onClose;
 
+    const editActivityDrawerDisclosure = useDisclosure();
+    const editActivityDrawerIsOpen = editActivityDrawerDisclosure.isOpen;
+    const editActivityDrawerOnOpen = editActivityDrawerDisclosure.onOpen;
+    const editActivityDrawerOnClose = editActivityDrawerDisclosure.onClose;
+
+    const listActivityDrawerDisclosure = useDisclosure();
+    const listActivityDrawerIsOpen = listActivityDrawerDisclosure.isOpen;
+    const listActivityDrawerOnOpen = listActivityDrawerDisclosure.onOpen;
+    const listActivityDrawerOnClose = listActivityDrawerDisclosure.onClose;
+
 	return (
 		<>
             {!isLoading ?
@@ -77,13 +89,26 @@ export default function Activities(): React.JSX.Element {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                         {activities.map((act: any, i) =>(
-                            <button onClick={() => setSelectedActivityId(act.activity_id)} key={i} className="bg-white px-3 py-5 rounded-md shadow cursor-pointer hover:bg-[#ededed] duration-300">
-                                <div className="text-2xl text-center">{act.activity_name}</div>
-                                <div className="text-md text-[#4f4f4f] text-center">{act.activity_description}</div>
-                                <div className="mt-5 text-2xl text-center">เข้าร่วม {act.activity_participated.length} คน</div>
-                                <div className="mt-5 text-md text-center">ดำเนินการโดย {act.activity_department.department_fullname_th}</div>
-                                <div className="text-md text-center">{dayjs(act.activity_date).toDate().toDateString()}</div>
-                            </button>
+                            <div key={i} className="bg-white rounded-md shadow">
+                                <div className="w-full px-3 py-5">
+                                    <div className="text-2xl text-center">{act.activity_name}</div>
+                                    <div className="text-md text-[#4f4f4f] text-center">{act.activity_description}</div>
+                                    <div className="mt-5 text-2xl text-center">เข้าร่วม {act.activity_participated.length} คน</div>
+                                    <div className="mt-5 text-md text-center">ดำเนินการโดย {act.activity_department.department_fullname_th}</div>
+                                    <div className="text-md text-center">{dayjs(act.activity_date).toDate().toDateString()}</div>
+                                </div>
+                                <div className="flex flex-row justify-center rounded-b-md h-10">
+                                    <button className="text-center w-full content-center hover:bg-[#f0f0f0] active:bg-[#cecece] duration-300" onClick={() => {
+                                        setSelectedActivityId(act.activity_id);
+                                        editActivityDrawerOnOpen();
+                                    }} >เเก้ไข</button>
+                                    <div className="w-[3px] my-2 bg-[#727272]"></div>
+                                    <button className="text-center w-full content-center hover:bg-[#f0f0f0] active:bg-[#cecece] duration-300" onClick={() => {
+                                        setSelectedActivityId(act.activity_id);
+                                        listActivityDrawerOnOpen();
+                                    }} >รายชื่อผู้เข้าร่วม</button>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>)
@@ -92,7 +117,9 @@ export default function Activities(): React.JSX.Element {
                     <Spinner thickness="3px" speed="0.45s" emptyColor="gray.200" color="black.500" size="xl" />
                 </div>)
             }
-            <AddActivityDrawer isOpen={addNewActivityDrawerIsOpen} onOpen={addNewActivityDrawerOnOpen} onClose={addNewActivityDrawerOnClose} id={selectedActivityId} refetch={setRefetch} />
+            <AddActivityDrawer isOpen={addNewActivityDrawerIsOpen} onOpen={addNewActivityDrawerOnOpen} onClose={addNewActivityDrawerOnClose} refetch={setRefetch} />
+            <EditActivityDrawer isOpen={editActivityDrawerIsOpen} onOpen={editActivityDrawerOnOpen} onClose={editActivityDrawerOnClose} id={selectedActivityId} refetch={setRefetch} />
+            <ListParticipatedActivityModal isOpen={listActivityDrawerIsOpen} onOpen={listActivityDrawerOnOpen} onClose={listActivityDrawerOnClose} id={selectedActivityId} refetch={setRefetch} />
 		</>
 	);
 }
