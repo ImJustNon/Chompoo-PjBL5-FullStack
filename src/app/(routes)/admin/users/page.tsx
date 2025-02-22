@@ -7,11 +7,6 @@ import axios, { AxiosResponse } from "axios";
 import { List } from "lucide-react"
 import { useEffect, useState } from "react";
 
-const users = [
-	{ id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
-	{ id: 2, name: "Jane Smith", email: "jane@example.com", role: "User" },
-	{ id: 3, name: "Bob Johnson", email: "bob@example.com", role: "User" },
-];
 
 export default function Users(): React.JSX.Element {
 
@@ -104,9 +99,9 @@ export default function Users(): React.JSX.Element {
 							<tbody className="bg-white divide-y divide-gray-200">
 								{students.map((student: any, i: number) => (
 									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.students}>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{student.user_id}</td>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{student.user_prefix.prefix_name} {student.user_firstname} {student.user_lastname}</td>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-900">{student.user_id}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-500">{student.user_prefix.prefix_name} {student.user_firstname} {student.user_lastname}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-500 flex flex-row">
 											<button onClick={() =>{
 												studentOptionsDrawerOnOpen();
 												setEditUserId(student.user_id);
@@ -144,9 +139,9 @@ export default function Users(): React.JSX.Element {
 							<tbody className="bg-white divide-y divide-gray-200">
 								{admins.map((admin: any, i: number) => (
 									<tr key={i} className="hover:bg-[#ebebeb] duration-300" hidden={isUsersDataLoading.admins}>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{admin.user_id}</td>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{admin.user_prefix.prefix_name} {admin.user_firstname} {admin.user_lastname}</td>
-										<td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-row">
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-900">{admin.user_id}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-500">{admin.user_prefix.prefix_name} {admin.user_firstname} {admin.user_lastname}</td>
+										<td className="px-3 py-4 whitespace-nowrap text-wrap text-sm text-gray-500 flex flex-row">
 											<button onClick={() =>{
 												adminOptionsDrawerOnOpen();
 												setEditUserId(admin.user_id);
