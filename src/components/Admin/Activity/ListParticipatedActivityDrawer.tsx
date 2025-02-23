@@ -75,6 +75,7 @@ export default function ListParticipatedActivityModal({ isOpen, onOpen, onClose,
                     "base": "sm",
                     "sm": "xl"
                 }} 
+                scrollBehavior={"outside"}
             >
                 <ModalOverlay />
                 <ModalContent>
