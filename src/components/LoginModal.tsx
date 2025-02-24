@@ -52,8 +52,13 @@ export default function LoginModal({ isOpen, onOpen, onClose }: { isOpen: boolea
             }
 
             localStorage.setItem("is_login", "true");
-            localStorage.setItem("user_data", JSON.stringify(userDataResponse.data.data))
-            router.push("/home");
+            localStorage.setItem("user_data", JSON.stringify(userDataResponse.data.data));
+            if(userDataResponse.data.data.is_admin === true){
+                router.push("/admin");
+            }
+            else {
+                router.push("/home");
+            }
         }
         catch(e){
             console.log(e);

@@ -16,6 +16,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const reqFormData = await req.formData();
     const xlsxFile: File | null = reqFormData.get("xlsx") as File ?? null;
 
+    // console.log(xlsxFile);
+
     if(!xlsxFile){
         return NextResponse.json({
             status: "FAIL",
@@ -106,6 +108,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 note: d.note ?? null
             })),
         });
+
+        // await prisma.morningCheckinData.deleteMany();
         
         return NextResponse.json({
             status: "OK",

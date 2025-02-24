@@ -4,6 +4,7 @@ import AddActivityDrawer from "@/components/Admin/Activity/AddActivityDrawer";
 import EditActivityDrawer from "@/components/Admin/Activity/EditActivityDrawer";
 import ListParticipatedActivityModal from "@/components/Admin/Activity/ListParticipatedActivityDrawer";
 import FilterModal from "@/components/Admin/MorningActivity/FilterModal";
+import UploadDataModal from "@/components/Admin/MorningActivity/UploadDataModal";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
@@ -70,10 +71,10 @@ export default function MorningActivity(): React.JSX.Element {
     const filterModalOnOpen = filterModalDisclosure.onOpen;
     const filterModalOnClose = filterModalDisclosure.onClose;
 
-    const uploadDataDrawerDisclosure = useDisclosure();
-    const uploadDataDrawerIsOpen = uploadDataDrawerDisclosure.isOpen;
-    const uploadDataDrawerOnOpen = uploadDataDrawerDisclosure.onOpen;
-    const uploadDataDrawerOnClose = uploadDataDrawerDisclosure.onClose;
+    const uploadDataModalDisclosure = useDisclosure();
+    const uploadDataModalIsOpen = uploadDataModalDisclosure.isOpen;
+    const uploadDataModalOnOpen = uploadDataModalDisclosure.onOpen;
+    const uploadDataModalOnClose = uploadDataModalDisclosure.onClose;
 
 	return (
 		<>
@@ -83,16 +84,16 @@ export default function MorningActivity(): React.JSX.Element {
                         <h2 className="text-2xl font-semibold">Morning Activity</h2>
                         <button className="px-7 py-1 bg-[#e7e7e7] rounded-md text-lg hover:bg-[#c0c0c0] duration-300 cursor-pointer text-semibold ml-5 mr-2" onClick={() => filterModalOnOpen()}>Filter</button>
                         <div className="grow"></div>
-                        <button className="text-xl px-5 py-1 border-[1px] rounded-md hover:bg-[#d6d6d6] active:bg-[#ededed] duration-300" onClick={() => "addNewActivityDrawerOnOpen()"}>Upload</button>
+                        <button className="text-xl px-5 py-1 border-[1px] rounded-md hover:bg-[#d6d6d6] active:bg-[#ededed] duration-300" onClick={() => uploadDataModalOnOpen()}>Upload</button>
                     </div>
                     <div className="bg-white shadow rounded-lg overflow-y-visible">
 						<table className="min-w-full divide-y divide-gray-200">
 							<thead className="bg-gray-50">
 								<tr>
-									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">รหัส</th>
+									<th className="px-3 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">รหัส</th>
 									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ชื่่อ</th>
 									<th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">วัน</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">เวลา</th>
+                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">เวลา</th>
 								</tr>
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
@@ -121,6 +122,7 @@ export default function MorningActivity(): React.JSX.Element {
                 </div>)
             }
             <FilterModal isOpen={filterModalIsOpen} onOpen={filterModalOnOpen} onClose={filterModalOnClose} filter={selectedFilters} setFilter={setSelectedFilters} refetch={setRefetch} /> 
+            <UploadDataModal isOpen={uploadDataModalIsOpen} onOpen={uploadDataModalOnOpen} onClose={uploadDataModalOnClose} refetch={setRefetch} />
 		</>
 	);
 }

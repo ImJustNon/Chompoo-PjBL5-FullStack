@@ -1,11 +1,10 @@
 import { Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay } from "@chakra-ui/react";
-import { BookOpenText, CircleEllipsis, LayoutDashboard, Users } from "lucide-react";
+import { BookOpenText, CircleEllipsis, Flag, LayoutDashboard, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
 
 export function AdminNavigationDrawer({ isOpen, onOpen, onClose }: { isOpen: boolean; onOpen: () => void; onClose: () => void; }): React.JSX.Element {
     const router = useRouter();
-    const btnRef = useRef<any>(null);
     
     return (
         <>
@@ -13,7 +12,6 @@ export function AdminNavigationDrawer({ isOpen, onOpen, onClose }: { isOpen: boo
                 isOpen={isOpen}
                 placement={"right"}
                 onClose={onClose}
-                finalFocusRef={btnRef}
                 size={{
                     "sm": "xs"
                 }}
@@ -30,10 +28,10 @@ export function AdminNavigationDrawer({ isOpen, onOpen, onClose }: { isOpen: boo
                     </DrawerHeader>
                     <DrawerBody>
                        <div className="mt-5 flex flex-col gap-7">
-                            <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin")}>
+                            {/* <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin")}>
                                 <LayoutDashboard className="mr-3 h-6 w-6" />
                                 <div className="text-lg font-medium">Dashboard</div>
-                            </button>
+                            </button> */}
                             <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin/users")}>
                                 <Users className="mr-3 h-6 w-6" />
                                 <div className="text-lg font-medium">Users</div>
@@ -41,6 +39,10 @@ export function AdminNavigationDrawer({ isOpen, onOpen, onClose }: { isOpen: boo
                             <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin/activities")}>
                                 <BookOpenText className="mr-3 h-6 w-6" />
                                 <div className="text-lg font-medium">Activities</div>
+                            </button>
+                            <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin/activities")}>
+                                <Flag className="mr-3 h-6 w-6" />
+                                <div className="text-lg font-medium">Morning Activity</div>
                             </button>
                             <button className="flex flex-row items-center gap-3 text-lg" onClick={() => router.push("/admin/others")}>
                                 <CircleEllipsis className="mr-3 h-6 w-6" />
