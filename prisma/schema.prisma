@@ -143,3 +143,17 @@ model QRCache {
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }
+
+model MorningCheckinData {
+    id                          Int                         @id @default(autoincrement())
+    employee_number_at_machine  String?
+    employee_name               String?
+    employee_number             String?
+    date                        DateTime?                    
+    time_1                      DateTime?
+    time_2                      DateTime?
+    machine_number              String?
+    note                        String?
+    created_at                  DateTime                    @default(now())
+    updated_at                  DateTime                    @updatedAt
+}

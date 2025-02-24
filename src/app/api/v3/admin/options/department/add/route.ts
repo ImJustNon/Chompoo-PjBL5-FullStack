@@ -18,7 +18,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const department_type: string | null = reqBody.department_type ?? null;
 
 
-
     if(!department_id || !department_fullname_th || !department_fullname_en || !department_type){
         return NextResponse.json({
             status: "FAIL",

@@ -11,7 +11,7 @@ import { List } from "lucide-react"
 import { useEffect, useState } from "react";
 
 
-export default function Users(): React.JSX.Element {
+export default function Other(): React.JSX.Element {
 
 	const [refetchData, setRefetchData] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<{

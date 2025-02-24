@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { LayoutDashboard, Users, Settings, LogOut, Menu, CircleEllipsis, BookOpenText } from "lucide-react";
+import { LayoutDashboard, Users, Settings, LogOut, Menu, CircleEllipsis, BookOpenText, Flag } from "lucide-react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AdminNavigationDrawer } from "@/components/Admin/AdminNavigationDrawer";
 
@@ -39,6 +39,9 @@ export default function AdminLayout({ children }: {children: React.ReactNode}): 
                         </Link>
                         <Link href="/admin/activities" className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >
                             <BookOpenText className="mr-3 h-6 w-6" />Activities
+                        </Link>
+                        <Link href="/admin/morning-activity" className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >
+                            <Flag className="mr-3 h-6 w-6" />Morning Activity
                         </Link>
                         <Link href="/admin/others" className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" >
                             <CircleEllipsis className="mr-3 h-6 w-6" />Others
