@@ -82,7 +82,7 @@ export default function Profile(): React.JSX.Element {
                 </div>
                 <div className="mt-3 flex flex-col gap-2">
 
-                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300">
+                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300" onClick={() => router.push("/profile")}>
                         <div className="text-xl mr-2">▪</div>
                         <div className="flex flex-col">
                             <div className="text-lg">ข้อมูลส่วนตัว</div>
@@ -92,28 +92,28 @@ export default function Profile(): React.JSX.Element {
 
                     <div className="w-full h-[3px] bg-[#bebebe]"></div>
 
-                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300"> 
+                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300" onClick={() => router.push("/morning-activity")}> 
                         <div className="text-xl mr-2">▪</div>
                         <div className="text-lg">Report (เข้าแถว)</div>
                     </div>
 
                     <div className="w-full h-[3px] bg-[#bebebe]"></div>
 
-                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300"> 
+                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300" onClick={() => router.push("club-activities")}> 
                         <div className="text-xl mr-2">▪</div>
                         <div className="text-lg">Report (เข้าร่วมกิจกรรม)</div>
                     </div>
 
                     <div className="w-full h-[3px] bg-[#bebebe]"></div>
 
-                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300"> 
+                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300" onClick={() => router.push("/contact")}> 
                         <div className="text-xl mr-2">▪</div>
                         <div className="text-lg">ติดต่อสอบถาม</div>
                     </div>
 
                     <div className="w-full h-[3px] bg-[#bebebe]"></div>
 
-                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300">
+                    <div className="pl-10 flex flex-row items-start cursor-pointer hover:scale-105 font-semibold hover:text-[#727272] duration-300" onClick={() => router.push("/logout")}>
                         <div className="text-xl mr-2">▪</div>
                         <div className="flex flex-col">
                             <div className="text-lg">ออกจากระบบ</div>
