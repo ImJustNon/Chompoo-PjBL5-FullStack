@@ -3,6 +3,7 @@
 import AddActivityDrawer from "@/components/Admin/Activity/AddActivityDrawer";
 import EditActivityDrawer from "@/components/Admin/Activity/EditActivityDrawer";
 import ListParticipatedActivityModal from "@/components/Admin/Activity/ListParticipatedActivityDrawer";
+import { getCookies } from "@/utils/getCookies";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
@@ -13,6 +14,14 @@ import { useEffect, useState } from "react";
 
 export default function Activities(): React.JSX.Element {
     const router: AppRouterInstance = useRouter();
+    useEffect(() =>{
+        const cookies = getCookies(document.cookie);
+        if(!cookies.token) {
+            return router.push("/login");
+        }
+    }, []);
+
+    
     const [refetch, setRefetch] = useState<number>(0);
 
     const [isOpenYearSelector, setIsOpenYearSelector] = useState<boolean>(false);

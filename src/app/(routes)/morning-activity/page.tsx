@@ -19,8 +19,6 @@ import { Spinner } from "@chakra-ui/react";
 
 export default function Login(): React.JSX.Element {
     const router = useRouter();
-    
-
     useEffect(() =>{
         const cookies = getCookies(document.cookie);
         if(!cookies.token) {

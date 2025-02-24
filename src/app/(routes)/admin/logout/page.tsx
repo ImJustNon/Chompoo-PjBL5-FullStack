@@ -1,5 +1,6 @@
 "use client";
 
+import { getCookies } from "@/utils/getCookies";
 import { Spinner } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";

@@ -14,12 +14,6 @@ import { useRouter } from "next/navigation";
 export default function Login(): React.JSX.Element {
     const router = useRouter();
 
-    useEffect(() =>{
-        const cookies = getCookies(document.cookie);
-        if(cookies.token) {
-            return router.push("/home");
-        }
-    }, []);
  
 
     const loginModalDisclosure = useDisclosure();

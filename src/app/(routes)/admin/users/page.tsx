@@ -9,6 +9,13 @@ import { useEffect, useState } from "react";
 
 
 export default function Users(): React.JSX.Element {
+	const router = useRouter();
+	useEffect(() =>{
+		const cookies = getCookies(document.cookie);
+		if(!cookies.token) {
+			return router.push("/login");
+		}
+	}, []);
 
 	const [refetchData, setRefetchData] = useState<number>(0);
 

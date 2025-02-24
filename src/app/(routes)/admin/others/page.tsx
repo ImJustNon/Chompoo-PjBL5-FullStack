@@ -5,13 +5,23 @@ import AddDepartmentDrawer from "@/components/Admin/Department/AddDepartmentDraw
 import AddPrefixDrawer from "@/components/Admin/Prefix/AddPrefixDrawer";
 import AddRoleDrawer from "@/components/Admin/Role/AddRoleDrawer";
 import StudentOptionsDrawer from "@/components/Admin/StudentOptionsDrawer";
+import { getCookies } from "@/utils/getCookies";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { List } from "lucide-react"
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export default function Other(): React.JSX.Element {
+	const router = useRouter();
+	useEffect(() =>{
+		const cookies = getCookies(document.cookie);
+		if(!cookies.token) {
+			return router.push("/login");
+		}
+	}, []);
+
 
 	const [refetchData, setRefetchData] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<{

@@ -1,7 +1,19 @@
-import React from "react";
+"use client"
+
+import React, { useEffect } from "react";
 import { Users, DollarSign, ShoppingCart, ArrowUpRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { getCookies } from "@/utils/getCookies";
 
 export default function AdminPage(): React.JSX.Element {
+
+    const router = useRouter();
+    useEffect(() =>{
+        const cookies = getCookies(document.cookie);
+        if(!cookies.token) {
+            return router.push("/login");
+        }
+    }, []);
     
     return (
         <>
