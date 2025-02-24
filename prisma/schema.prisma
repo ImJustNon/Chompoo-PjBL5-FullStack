@@ -79,7 +79,7 @@ model Students {
     student_department_id       String
     activities_participated     ActivitiesParticipated[]          
 	user						Users                       @relation(fields: [student_id], references: [user_id])
-    qr                          QRCache?
+    qr                          QRCache[]
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }
@@ -116,7 +116,7 @@ model Activities {
     activity_participated       ActivitiesParticipated[]
     activity_role               Roles                       @relation(fields: [activity_role_admin_id], references: [role_id])
     activity_role_admin_id      Int
-    qrcache                     QRCache?
+    qrcache                     QRCache[]
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt
 }
@@ -134,11 +134,11 @@ model ActivitiesParticipated {
 }
 
 model QRCache {
-    qrcache_uuid                String                      @unique @default(uuid())
-    student                     Students                    @relation(fields: [qrcache_student_id], references: [student_id]) 
-    qrcache_student_id          String                      @id
-    acivity                     Activities                  @relation(fields: [qrcache_activity_id],references: [activity_id])
-    qrcache_activity_id         String                      @unique
+    qrcache_uuid                String                      @id @unique @default(uuid())
+    student                     Students[]                    // @relation(fields: [qrcache_student_id], references: [student_id]) 
+    qrcache_student_id          String                      // @id
+    acivity                     Activities[]                  // @relation(fields: [qrcache_activity_id],references: [activity_id])
+    qrcache_activity_id         String                      // @unique
     expired_at                  DateTime 
     created_at                  DateTime                    @default(now())
     updated_at                  DateTime                    @updatedAt

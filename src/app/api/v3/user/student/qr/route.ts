@@ -43,7 +43,7 @@ export async function GET(req: NextRequest): Promise<NextResponse| void> {
             });
         }
 
-        const findQrCache = await prisma.qRCache.findUnique({
+        const findQrCache = await prisma.qRCache.findFirst({
             where: {
                 qrcache_student_id: findUser.student?.student_id,
                 qrcache_activity_id: activity_id
