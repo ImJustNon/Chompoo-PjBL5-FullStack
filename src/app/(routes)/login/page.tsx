@@ -24,16 +24,14 @@ export default function Login(): React.JSX.Element {
     return (
         <>
             <div className="flex flex-col grow">
-                <div className="flex flex-col grow items-center justify-center gap-5 bg-cover bg-no-repeat bg-center " style={{
-                    backgroundImage: `url(${login_bg.src})`,
-                }}>
-                    {/* <Image className="max-w-[60%] animate__animated animate__fadeIn animate__slow" src={sbtvc_logo} alt="sbtvc" />
+                <div className="flex flex-col grow items-center justify-center gap-5">
+                    <Image className="max-w-[60%] animate__animated animate__fadeIn animate__slow" src={sbtvc_logo} alt="sbtvc" />
                     <div className="text-center font-normal text-3xl text-[#f9682f] px-16 font-fchome animate__animated animate__fadeIn animate__slower">
                         {("ระบบเช็คชื่อกิจกรรมนักเรียน")}
                     </div>
                     <div className="text-center font-normal text-xl text-[#f9682f] px-5 font-fchome animate__animated animate__fadeIn animate__slower">
                         {("วิทยาลัยอาชีวศึกษาเทคโนโลยีฐานวิทยาศาสตร์ (ชลบุรี)")}
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="bg-gradient-to-b from-[#f76418] to-[#c74605] p-8 py-10 rounded-t-3xl">
