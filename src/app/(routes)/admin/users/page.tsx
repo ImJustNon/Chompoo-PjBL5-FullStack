@@ -2,14 +2,17 @@
 
 import AddStudentDrawer from "@/components/Admin/AddStudentDrawer";
 import StudentOptionsDrawer from "@/components/Admin/StudentOptionsDrawer";
+import { getCookies } from "@/utils/getCookies";
 import { Spinner, useDisclosure } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { List } from "lucide-react"
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export default function Users(): React.JSX.Element {
-	const router = useRouter();
+	const router: AppRouterInstance = useRouter();
 	useEffect(() =>{
 		const cookies = getCookies(document.cookie);
 		if(!cookies.token) {
