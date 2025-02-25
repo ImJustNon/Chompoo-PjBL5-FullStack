@@ -84,7 +84,7 @@ export default function ListParticipatedActivityModal({ isOpen, onOpen, onClose,
                         <ModalBody className="my-3">
                             <div className="mb-5 flex flex-row items-center">
                                 <div className="text-2xl">รายชื่อผู้เข้าร่วม {`(${activityParticipatedData.length} คน)`}</div>
-                                <button className="ml-10 py-1 px-5 rounded-md text-md bg-[#eeeeee] hover:bg-[#cfcfcf] active:bg-[#adadad] duration-300">Download</button>
+                                {/* <button className="ml-10 py-1 px-5 rounded-md text-md bg-[#eeeeee] hover:bg-[#cfcfcf] active:bg-[#adadad] duration-300">Download</button> */}
                             </div>
                             <div className="flex flex-col">
                                 <div className="grid grid-cols-4 mb-5">
