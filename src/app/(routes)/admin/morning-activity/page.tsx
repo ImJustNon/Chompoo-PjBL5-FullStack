@@ -37,12 +37,12 @@ export default function MorningActivity(): React.JSX.Element {
         user_id: string | null,
     }>({
         date: {
-            // day: String(dayjs().toDate().getDay()),
-            // month: String(dayjs().toDate().getMonth()),
-            // year: String(dayjs().toDate().getFullYear())
-            day: "24",
-            month: "10",
-            year: "2024"
+            day: String(dayjs().toDate().getDay()),
+            month: String(dayjs().toDate().getMonth()),
+            year: String(dayjs().toDate().getFullYear())
+            // day: "24",
+            // month: "10",
+            // year: "2024"
         },
         user_id: null
     });

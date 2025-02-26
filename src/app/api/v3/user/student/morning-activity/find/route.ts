@@ -53,11 +53,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             });
         }
 
+        
         if(date){
             const findByDateResult = await prisma.morningCheckinData.findMany({
                 where: {
-                    employee_number: findStudent.student_id.split("00").join(),
-                    date: dayjs(`${date.year}-${date.month}-${date.day}`).toISOString()
+                    employee_number: findStudent.student_id.split("00").join(""),
+                    date: dayjs(`${date.year}-${date.month}-${date.day}`).toISOString() //.toDate()// .toUTCString()
                 }
             });
             const sortedByDate = findByDateResult.sort((a, b) => dayjs(a.date).toDate().getTime() - dayjs(b.date).toDate().getTime());
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         else {
             const findById = await prisma.morningCheckinData.findMany({
                 where: {
-                    employee_number: findStudent.student_id.split("00").join() // "652029101"// 
+                    employee_number: findStudent.student_id.split("00").join("") // "652029101"// 
                 }
             });
             const sortedByDate = findById.sort((a, b) => dayjs(a.date).toDate().getTime() - dayjs(b.date).toDate().getTime());
