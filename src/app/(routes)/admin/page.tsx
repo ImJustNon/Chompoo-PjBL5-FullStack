@@ -14,6 +14,10 @@ export default function AdminPage(): React.JSX.Element {
             return router.push("/login");
         }
     }, []);
+
+    useEffect(() => {
+        router.push("/admin/users");
+    }, []);
     
     return (
         <>
