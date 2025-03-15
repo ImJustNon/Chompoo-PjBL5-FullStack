@@ -133,4 +133,4 @@
 <br />
 <hr />
 
-<center><h3>Made with 💗 by The Greatest Programer That Ever Live</h3></center>
+<h3 align="center">Made with 💗 by The Greatest Programer That Ever Live</h3>
