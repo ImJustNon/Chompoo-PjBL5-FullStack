@@ -1,5 +1,5 @@
-<center><h1>SBTVC Easy-Checkin</h1></center>
-<center><h3>ระบบเช็คชื่อกิจกรรมนักเรียน วิทยาลัยอาชีวศึกษาเทคโนโลยีฐานวิทยาศาสตร์ (ชลบุรี)</h3></center>
+<h1 align="center">SBTVC Easy-Checkin</h1>
+<h3 align="center">ระบบเช็คชื่อกิจกรรมนักเรียน วิทยาลัยอาชีวศึกษาเทคโนโลยีฐานวิทยาศาสตร์ (ชลบุรี)</h3>
 
 <p>Project PjBL ชิ้นที่ 5 โปรเจคสุดท้าย ของกลุ่ม ชมพู กอไผ่ เค้ก (SBTVC#15 / IT#2) โดยโปรเจคนี้ก็ตามชื่อคือระบบเช็คชื่อกิจกรรมก็คือให้นึกภาพเวลาเราไป Open house ของมหาวิทยาลัยที่เขาจะให้เราเเสดง QR Code ให้พี่เขาเเล้วพี่เข้าก็จะแสกนเป็นการ Checkin โปรเจคนี้ก็ได้เเรงบันดาลใจจากสิ่งนั้น ก็คือ ระบบนี้จะมีผู้ใช้ 3 ประเภทก็คือ 1)Student(คนที่เเสดง QR Code) 2)ActivityAdmin(เป็นนักเรียนที่สามารถเเสกน QR Code ของคนอื่นเพื่อลงทะเบียนได้) 3)Admin(ผู้ดูเเลสามารถจัดการระบบได้ทุกอย่าง มี Panel สำหรับ Admin โดยเฉพาะ) นักเรียนทุกคนจะมี QR Code เป็นของตัวเองเเต่ละกิจกรรมเเละจะ Reset QR Code ทุกๆ 1 นาที เพื่อเป็นการป้องกันการบันทึกไว้</p>
 
@@ -65,11 +65,11 @@
 
 <h2>UI Design</h2>
 <a href="https://www.figma.com/design/BJOaGnP2W1YNOpCUwPsGIt/Design-Web-Gay%E0%B9%86?node-id=0-1&t=TqFd1l8zOKsTMgSF-1" target="_blank"><p>View Online on figma.com</p></a>
-<center><img src="./docs/ui_design.png" /></center>
+<img align="center" src="./docs/ui_design.png" />
 
 <h2>Database Diagram (Relation Design)</h2>
 <a href="https://dbdiagram.io/d/PjBL-5-เกๆ-678d15df6b7fa355c358757b" target="_blank"><p>View Online on dbdiagram.io</p></a>
-<center><img src="./docs/db_diagram.png" /></center>
+<img align="center" src="./docs/db_diagram.png" />
 
 <h2>Requirements</h2>
 <ul>
