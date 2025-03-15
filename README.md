@@ -1,10 +1,9 @@
+<br />
 <div align="center">
     <img height="150px" src="./docs/thavit_logo.png" />
     <img width="150px" src="./docs/it_logo.png" />
     <img width="150px" src="./docs/sbtvc_logo.png" />
 </div>
-
-<br /><br />
 
 
 <h1 align="center">SBTVC Easy-Checkin</h1>
